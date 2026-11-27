@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ video.title }} · Синамо</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=6">
+    <link rel="stylesheet" href="{% static 'home.css' %}?v=13">
+</head>
+<body class="home-page">
+    <div class="watch-main">
+        <a class="watch-back" href="/home">← Ба рӯйхати филмҳо</a>
+
+        <video class="watch-player" {% if video.video %}src="{{ video.video.url }}"{% endif %} {% if video.image %}poster="{{ video.image.url }}"{% endif %} controls playsinline preload="metadata"></video>
+
+        <h1 class="watch-title">{{video.title}}</h1>
+
+        <div class="watch-author">{{video.author}}</div>
+        
+        <div class="watch-caption">{{video.caption}}</div>
+        <div class="watch-comments">
+            <h2>Шарҳҳо</h2>
+            {% if user.is_authenticated %}
+            <form method="post" class="comment-form">
+                {% csrf_token %}
+                <textarea name="text" class="input" placeholder="Шарҳи худро нависед" aria-label="Шарҳ" required></textarea>
+                <button class="button" type="submit">Фиристодан</button>
+            </form>
+            {% else %}
+            <p><a class="watch-back" href="{% url 'login' %}">Барои навиштани шарҳ ворид шавед</a></p>
+            {% endif %}
+            <a class="watch-back" href="/watch/{{video.pk}}/comments/">Ҳамаи шарҳҳо</a>
+        </div>
+        {% if recommendations %}
+        <section class="watch-comments">
+            <h2>Видеоҳои монанд</h2>
+            <ul>
+                {% for recommendation in recommendations %}
+                <li><a class="watch-back" href="{% url 'watch_video' recommendation.pk %}">{{ recommendation.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+    </div>
+</body>
+</html>

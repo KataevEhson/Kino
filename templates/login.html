@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=6">
+    <title>Воридшавӣ · Синамо</title>
+</head>
+<body class="page">
+    <div class="box">
+        <a class="brand" href="{% url 'home' %}">Синамо<span>.</span></a>
+        <div class="right">
+            <h1 class="title">Ворид шудан</h1>
+            {% if error %}<p role="alert">{{ error }}</p>{% endif %}
+            <form class="form" method="post">
+                {% csrf_token %}
+                <div class="group">
+                    Номи корбар
+                    <input class="input" type="text" name="username" placeholder="Номи корбар" autocomplete="username" required>
+                </div>
+                <div class="group">
+
+                    Рамз
+                    <input class="input" type="password" name="password" placeholder="Рамзро ворид кунед" autocomplete="current-password" required>
+                </div>
+                <button class="button">Ворид шудан</button>
+            </form>
+            <p class="bottom">Ҳисоб надоред? <a class="link" href="/">Сабти ном</a></p>
+        </div>
+    </div>
+</body>
+</html>

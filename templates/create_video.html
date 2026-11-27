@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=6">
+    <title>Илова кардани филм · Синамо</title>
+</head>
+<body class="page">
+    <main class="upload-panel">
+        <a class="brand" href="{% url 'home' %}">Синамо<span>.</span></a>
+        <h1 class="title">Илова кардани филм</h1>
+        <form class="form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <input class="input" type="text" name="title" placeholder="Номи филм">
+                <input class="input" type="text" name="author" placeholder="Коргардон">
+                <textarea class="input" name="caption" placeholder="Тавсиф"></textarea>
+
+                <label for="category">Жанр</label>
+                <select class="input" id="category" name="category" required>
+                    <option value="">Жанрро интихоб кунед</option>
+                    {% for i in categories %}
+                    <option value="{{ i.pk }}">{{ i.text }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="video">Файли филм</label>
+                <input class="input" type="file" id="video" name="video" required>
+
+                <label for="image">Муқова</label>
+                <input class="input" type="file" id="image" name="image" required>
+
+                <button class="button" type="submit">Боргузорӣ</button>
+        </form>
+    </main>
+
+</body>
+</html>

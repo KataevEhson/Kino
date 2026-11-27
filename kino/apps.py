@@ -1,0 +1,7 @@
+from django.apps import AppConfig
+
+
+class KinoConfig(AppConfig):
+    name = 'kino'
+    label = 'youtube'
+    verbose_name = 'Синамо'

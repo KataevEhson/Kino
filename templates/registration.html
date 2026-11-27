@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=6">
+    <title>Сохтани ҳисоб · Синамо</title>
+</head>
+<body class="page">
+    <div class="box">
+        <a class="brand" href="{% url 'home' %}">Синамо<span>.</span></a>
+        <div class="right">
+            <h1 class="title">Сохтани ҳисоб</h1>
+            {% if error %}<p role="alert">{{ error }}</p>{% endif %}
+            <form class="form" method="post">
+                {% csrf_token %}
+                <div class="group">
+                    Номи корбар
+                    <input class="input" type="text" name="username" placeholder="Номи корбар" autocomplete="username" required>
+                </div>
+                <div class="group">
+                    Почтаи электронӣ
+                    <input class="input" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+                </div>
+                <div class="group">Рамз
+                    <input class="input" type="password" name="password" placeholder="Рамзро ворид кунед" autocomplete="new-password" required>
+                </div>
+                <button class="button">Сохтани ҳисоб</button>
+            </form>
+            <p class="bottom">Ҳисоб доред? <a class="link" href="/login/">Ворид шудан</a></p>
+        </div>
+    </div>
+</body>
+</html>

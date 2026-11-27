@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=6">
+    <link rel="stylesheet" href="{% static 'home.css' %}?v=13">
+    <title>Филмҳо · Синамо</title>
+</head>
+<body class="home-page">
+    <header class="site-header">
+        <a class="brand" href="{% url 'home' %}">Синамо<span>.</span></a>
+        {% if user.is_authenticated %}
+        <div class="header-actions">
+            <a class="header-link" href="{% url 'create_video' %}">Илова кардани филм</a>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="button" type="submit">Баромадан</button>
+            </form>
+        </div>
+        {% else %}
+        <a class="header-link" href="{% url 'login' %}">Ворид шудан</a>
+        {% endif %}
+    </header>
+    <main class="home-main">
+        <h1 class="catalog-title">Филмҳо</h1>
+        <nav class="category-list" aria-label="Жанрҳои филмҳо">
+            <a class="category-chip" href="{% url 'home' %}" {% if not selected_category %}aria-current="page"{% endif %}>Ҳамаи жанрҳо</a>
+            {% for category in categories %}
+            <a class="category-chip" href="{% url 'category_video' category.pk %}" {% if selected_category == category.pk %}aria-current="page"{% endif %}>{{ category.text }}</a>
+            {% endfor %}
+        </nav>
+        <div class="video-grid">
+            {% for film in videos %}
+            <a class="video-card" href="{% url 'watch_video' film.pk %}">
+                <div class="thumbnail">
+                    {% if film.image %}
+                    <img src="{{ film.image.url }}" alt="" loading="lazy">
+                    {% else %}
+                    <span aria-hidden="true">{{ film.title|first|upper }}</span>
+                    {% endif %}
+                </div>
+                <h2 class="video-title">{{ film.title }}</h2>
+                <p class="film-author">{{ film.author }}</p>
+            </a>
+            {% empty %}
+            <p class="category-empty">Ҳоло филме нест.</p>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>

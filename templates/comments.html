@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шарҳҳо · {{ video.title }} · Синамо</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=6">
+    <link rel="stylesheet" href="{% static 'home.css' %}?v=13">
+</head>
+<body class="home-page">
+    <div class="watch-main">
+        <a class="watch-back" href="/watch/{{ video.pk }}/">← Бозгашт ба филм</a>
+        <h1>Шарҳҳо ба филми {{ video.title }}</h1>
+        {% for comment in comments %}
+        <div class="watch-caption">
+            <strong>{{ comment.author }}</strong>
+            <div>{{ comment.text }}</div>
+        </div>
+        {% empty %}
+        <p>Ҳоло шарҳе нест.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
